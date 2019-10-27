@@ -7,13 +7,13 @@ package com.grayhat;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Toolkit;
 import java.net.URI;
-import java.net.URL;
 import java.util.Map;
 
 /**
  *
- * @author Rahul
+ * @author GrayHat
  */
 public class Main extends javax.swing.JFrame {
 
@@ -51,10 +51,12 @@ public class Main extends javax.swing.JFrame {
         "print(\"Hello World\")",
         "object Gray\n{\n\tdef main(args: Array[String])\n\t{\n\t\tprintln(\"Hello World!\")\n\t}\n}"
     };
+    Loading ob;
     public Main() {
-        URL resource = this.getClass().getResource("/");
-        System.out.println(resource.getFile());
+        //URL resource = this.getClass().getResource("/");
+        ////System.out.println(resource.getPath());
         initComponents();
+//        /ob = new Loading();
     }
 
     /**
@@ -93,6 +95,8 @@ public class Main extends javax.swing.JFrame {
         close = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("GrayCompiler");
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/favicon-32x32.png")));
         setUndecorated(true);
         setOpacity(0.95F);
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -225,7 +229,6 @@ public class Main extends javax.swing.JFrame {
 
         getContentPane().add(IOPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 740, 160));
 
-        codePanel.setBackground(new java.awt.Color(204, 204, 255));
         codePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setFocusable(false);
@@ -308,63 +311,70 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void scalalabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scalalabelMouseClicked
-        System.out.println("Scala Clicked");
+        ////System.out.println("Scala Clicked");
         curLang=7;
         stateChanged();
     }//GEN-LAST:event_scalalabelMouseClicked
 
     private void clabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clabelMouseClicked
-        System.out.println("C Clicked");
+        ////System.out.println("C Clicked");
         curLang=0;
         stateChanged();
     }//GEN-LAST:event_clabelMouseClicked
 
     private void cpplabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cpplabelMouseClicked
-        System.out.println("C++ Clicked");
+        //System.out.println("C++ Clicked");
         curLang=2;
         stateChanged();
     }//GEN-LAST:event_cpplabelMouseClicked
 
     private void csharplabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_csharplabelMouseClicked
-        System.out.println("C# Clicked");
+        //System.out.println("C# Clicked");
         curLang=1;
         stateChanged();
     }//GEN-LAST:event_csharplabelMouseClicked
 
     private void javalabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_javalabelMouseClicked
-        System.out.println("Java Clicked");
+        //System.out.println("Java Clicked");
         curLang=3;
         stateChanged();
     }//GEN-LAST:event_javalabelMouseClicked
 
     private void perllabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_perllabelMouseClicked
-        System.out.println("Perl Clicked");
+        //System.out.println("Perl Clicked");
         curLang=4;
         stateChanged();
     }//GEN-LAST:event_perllabelMouseClicked
 
     private void phplabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_phplabelMouseClicked
-        System.out.println("PHP Clicked");
+        //System.out.println("PHP Clicked");
         curLang=5;
         stateChanged();
     }//GEN-LAST:event_phplabelMouseClicked
 
     private void pythonlabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pythonlabelMouseClicked
-        System.out.println("Python3 Clicked");
+        //System.out.println("Python3 Clicked");
         curLang=6;
         stateChanged();
     }//GEN-LAST:event_pythonlabelMouseClicked
 
+    
     private void runMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_runMouseClicked
-        System.out.println("Run Clicked");
+        //this.setVisible(false);
+        //ob.main();
         String thisData[] =new String[3];
         thisData[0]=langCodes[curLang];
         thisData[1]=codeArea.getText();
         thisData[2]=inputArea.getText();
         Backend back = new Backend(thisData[0],thisData[1],thisData[2]);
         Map<String,String> result = back.run();
+        for(String key :result.keySet())
+        {
+            System.out.println(key+":"+result.get(key));
+        }
         if(result.containsKey("Error"))
         {
+            //loading.setText("");
             return;
         }
         time.setText(result.get("time")+" seconds");
@@ -380,10 +390,13 @@ public class Main extends javax.swing.JFrame {
         }
         output += result.get("output");
         outputArea.setText(output);
+        //loading.setText("");
+        //ob.exit();
+        //this.setVisible(true);
     }//GEN-LAST:event_runMouseClicked
 
     private void logolabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logolabelMouseClicked
-        System.out.println("Logo Clicked");
+        //System.out.println("Logo Clicked");
         try {
             if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
                 Desktop.getDesktop().browse(new URI("https://grayhat12.github.io/"));
@@ -393,7 +406,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_logolabelMouseClicked
 
     private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
-        System.out.println("Close Clicked");
+        //System.out.println("Close Clicked");
         System.exit(0);
     }//GEN-LAST:event_closeMouseClicked
 
